@@ -41,8 +41,20 @@ public class C05_HandleWindow {
         Assert.assertTrue(driver.getTitle().contains("The Internet"));
 
         driver.findElement(By.xpath("//*[text()='Click Here']")).click();
-        List<String>windowList=new ArrayList<String>(driver.getWindowHandles());
+        List<String> windowList = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(windowList.get(1));
+
+        //acilan yeni sayfanin basliginin new window old dogrulatin
+        String actualTitle = driver.getTitle();
+        String expectedTitle = "New Window";
+        Assert.assertEquals(expectedTitle, actualTitle);
+        //textin new window oldugunu dogrulayin
+        String actualText2 = driver.findElement(By.xpath("//h3[text()='New Window']")).getText();
+        String expectedText2 = "New Window";
+        Assert.assertEquals(expectedText2, actualText2);
+        //bir onceki sayfanin basliginin the internet oldugunu test edin
+        driver.switchTo().window(windowList.get(0));
+        Assert.assertEquals(driver.getTitle(),"The Internet");
 
     }
 
