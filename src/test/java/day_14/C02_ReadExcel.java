@@ -1,16 +1,18 @@
 package day_14;
 
-import org.apache.poi.ss.usermodel.*;
-import org.junit.Assert;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class C01_ReadExcel {
+public class C02_ReadExcel {
     @Test
-    public void readExcelTest() throws IOException {
+    public void ReadExcelTest() throws IOException {
         //. Dosya yolunu bir String degiskene atayalim
         String dosyaYolu="src/resources/ulkeler.xlsx";
 
@@ -21,16 +23,13 @@ public class C01_ReadExcel {
         Workbook workbook= WorkbookFactory.create(fis);//dosyamiza bir excel create ettik
 
         //11.sheet objesi olusturun workbook.getSheetAt(index)
-        Sheet sheet=workbook.getSheet("Sayfa1");
+
 
         //12. Row objesi olusturun sheet.getRow(index)
-        Row row= sheet.getRow(3);
-        //13. Cell objesi olusturun row.getCell(index
-        Cell cell= row.getCell(3);
-        System.out.println(cell);
-        String expectedData="Cezayir";
-        String actualData=cell.toString();
-        Assert.assertEquals(expectedData,actualData);
 
+        //13. Cell objesi olusturun row.getCell(index
+
+        String actualData=workbook.getSheet("Sayfa1").getRow(3).getCell(3).toString();
+        System.out.println(actualData);
     }
 }
