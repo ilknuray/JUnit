@@ -15,29 +15,38 @@ public class C01_Cookies extends TestBaseBeforeAfter {
         //-tum cookie’leri listeleyin
         Set<Cookie> allCookies = driver.manage().getCookies();
         System.out.println(allCookies);
-        allCookies.stream().forEach(t-> System.out.println(t.getName()+t.getValue()));
+        allCookies.stream().forEach(t -> System.out.println(t.getName() + t.getValue()));
         //3-Sayfadaki cookies sayisinin 5’den buyuk oldugunu test edin
-        int expectedCookie=5;
-        int actualCookie=allCookies.size();
-        Assert.assertNotEquals(expectedCookie,actualCookie);
+        int expectedCookie = 5;
+        int actualCookie = allCookies.size();
+        Assert.assertNotEquals(expectedCookie, actualCookie);
         //4-ismi i18n-prefs olan cookie degerinin USD oldugunu test edin
-        for (Cookie w:allCookies
-             ) {
-            if(w.getName().equals("i18n-prefs")){
-                Assert.assertEquals("USD",w.getValue());
+        for (Cookie w : allCookies
+        ) {
+            if (w.getName().equals("i18n-prefs")) {
+                Assert.assertEquals("USD", w.getValue());
             }
 
         }
         // 5-ismi “en sevdigim cookie” ve degeri “cikolatali” olan bir cookie  olusturun ve sayfaya ekleyin
-        Cookie newCookie=new Cookie("en sevdigim cookie","cikolatali");
+        Cookie newCookie = new Cookie("en sevdigim cookie", "cikolatali");
         driver.manage().addCookie(newCookie);
         //6-eklediginiz cookie’nin sayfaya eklendigini test edin
-        Set<Cookie>cookiler=driver.manage().getCookies();
-        cookiler.stream().forEach(t-> System.out.println(t.getName()+t.getValue()));
-        Assert.assertTrue(cookiler.contains(newCookie));
+        allCookies = driver.manage().getCookies();
+
+        allCookies.stream().forEach(t -> System.out.println(t.getName() + t.getValue()));
+        Assert.assertTrue(allCookies.contains(newCookie));
         //7-ismi skin olan cookie’yi silin ve silindigini test edin
-       // driver.manage().deleteCookie();
+        driver.manage().deleteCookieNamed("skin");
+        Cookie isim = driver.manage().getCookieNamed("skin");
+        Assert.assertFalse(allCookies.contains(isim));
+
         //8-tum cookie’leri silin ve silindigini test edin
-        //Collapse
+
+
+        driver.manage().deleteAllCookies();
+        allCookies = driver.manage().getCookies();
+        Assert.assertTrue(allCookies.isEmpty());
+
     }
 }
